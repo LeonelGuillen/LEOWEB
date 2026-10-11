@@ -142,3 +142,18 @@
   img.addEventListener('pointermove', onMove);
   img.addEventListener('pointerleave', reset);
 })();
+
+
+/* Efecto de luz que sigue el cursor en tarjetas (.spot) */
+(function () {
+  var fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || reduce) return;
+  document.querySelectorAll('.spot').forEach(function (el) {
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+})();

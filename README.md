@@ -2,7 +2,7 @@
 
 Sitio personal de Leonel Guillén Hernández. HTML, CSS y JavaScript estáticos, sin paso de build.
 
-## Despliegue en Cloudflare Pages
+## Despliegue en Cloudflare Pages.
 
 1. Cloudflare → Workers y Pages → Crear → Pages → Connect to Git.
 2. Elegir este repositorio y la rama `main`.

@@ -605,3 +605,59 @@ ul, ol { margin: 0; padding: 0; }
 .press-card h3 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); color: var(--white); margin-bottom: 14px; }
 .press-card p { color: var(--text-2); font-size: 1.05rem; max-width: 640px; }
 .press-link { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--cian); }
+
+/* =========================================================
+   Ajustes de color y maquetación (ronda de validación)
+   ========================================================= */
+
+/* 1) Cifras de estadísticas: el número no debe heredar el estilo de la etiqueta */
+.stat > span:last-child { font-size: .92rem; }
+.stat b .count { font-size: inherit; }
+
+/* 2) Estadísticas debajo del cintillo, sin superponerse */
+.stats { margin-top: 0; padding-top: 64px; padding-bottom: 64px; }
+.stat { background: linear-gradient(160deg, rgba(37, 80, 240, .18), rgba(16, 31, 53, .9) 60%); }
+.stat:nth-child(2) { background: linear-gradient(160deg, rgba(90, 209, 230, .16), rgba(16, 31, 53, .9) 60%); }
+.stat:nth-child(3) { background: linear-gradient(160deg, rgba(110, 146, 255, .2), rgba(16, 31, 53, .9) 60%); }
+.stat:nth-child(4) { background: linear-gradient(160deg, rgba(90, 209, 230, .22), rgba(37, 80, 240, .14)); }
+.stat:nth-child(1) { border-top: 3px solid var(--cobalto-2); }
+.stat:nth-child(2) { border-top: 3px solid var(--cian); }
+.stat:nth-child(3) { border-top: 3px solid #A9BFFF; }
+.stat:nth-child(4) { border-top: 3px solid var(--white); }
+.stat b { color: var(--white); }
+.stat:nth-child(1) b { color: #A9BFFF; }
+.stat:nth-child(2) b { color: var(--cian); }
+.stat:nth-child(3) b { color: #C6D4FF; }
+
+/* 3) Cintillo con colores alternados */
+.marquee {
+  background: linear-gradient(90deg, rgba(37, 80, 240, .22), rgba(90, 209, 230, .12), rgba(110, 146, 255, .22), rgba(90, 209, 230, .12));
+  background-size: 200% 100%; animation: bandShift 14s linear infinite;
+  border-top-color: var(--cobalto-2); border-bottom-color: var(--cobalto-2);
+}
+@keyframes bandShift { to { background-position: 200% 0; } }
+.marquee span:nth-child(4n+1) { color: var(--cian); }
+.marquee span:nth-child(4n+2) { color: #A9BFFF; }
+.marquee span:nth-child(4n+3) { color: var(--white); }
+.marquee span:nth-child(4n+4) { color: var(--cobalto-2); }
+.marquee span::after { color: var(--white); }
+
+/* 4) Ilustraciones: colores explícitos para que no se pierdan sobre el fondo */
+.tech-visual svg [fill="currentColor"] { fill: var(--text) !important; }
+.tech-visual svg [stroke="currentColor"] { stroke: var(--text) !important; }
+.tech-visual .t-shield { fill: #1F44CC !important; stroke: var(--cian) !important; }
+.tech-visual .t-bar { fill: var(--cobalto-2) !important; }
+.tech-visual .t-bar:nth-of-type(2) { fill: var(--cian) !important; }
+.tech-visual .t-bar:nth-of-type(3) { fill: #A9BFFF !important; }
+.tech-visual .t-bar:nth-of-type(4) { fill: var(--cobalto) !important; }
+.tech-visual .t-bar:nth-of-type(5) { fill: var(--cian) !important; }
+.tech-visual .t-trend { stroke: var(--white) !important; stroke-width: 3.5 !important; filter: drop-shadow(0 0 6px rgba(90, 209, 230, .7)); }
+.tech-visual .t-node-main { fill: var(--cobalto) !important; }
+.tech-visual .t-node-dot { fill: var(--cian) !important; }
+.tech-visual .t-packet { fill: var(--cian) !important; }
+.tech-visual .t-packet-2 { fill: #A9BFFF !important; }
+.tech-visual .t-stack rect:nth-child(1) { fill: var(--cian) !important; }
+.tech-visual .t-stack rect:nth-child(2) { fill: #A9BFFF !important; }
+.tech-visual .t-stack rect:nth-child(3) { fill: var(--cobalto-2) !important; }
+
+@media (max-width: 760px) { .stats { margin-top: 0; padding-top: 48px; } }

@@ -170,3 +170,21 @@
     });
   });
 })();
+
+
+/* Pausa las animaciones (CSS y SVG) de las secciones que no están en pantalla */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var blocks = document.querySelectorAll('main > section, .marquee');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var off = !e.isIntersecting;
+      e.target.classList.toggle('is-off', off);
+      e.target.querySelectorAll('svg').forEach(function (svg) {
+        if (off) { if (svg.pauseAnimations) svg.pauseAnimations(); }
+        else if (svg.unpauseAnimations) svg.unpauseAnimations();
+      });
+    });
+  }, { rootMargin: '200px 0px' });
+  blocks.forEach(function (b) { io.observe(b); });
+})();

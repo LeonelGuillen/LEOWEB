@@ -197,8 +197,7 @@ ul, ol { margin: 0; padding: 0; }
 .badges { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 32px; padding: 0; }
 .badges li {
   font-size: .9rem; font-weight: 600; padding: 8px 15px; border-radius: 999px;
-  color: var(--text); background: rgba(16, 31, 53, .7); border: 1px solid var(--line-strong);
-  backdrop-filter: blur(8px);
+  color: var(--text); background: rgba(16, 31, 53, .88); border: 1px solid var(--line-strong);
 }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
 .hero .meta { color: var(--muted); font-size: .95rem; margin: 0; }
@@ -404,8 +403,7 @@ ul, ol { margin: 0; padding: 0; }
 .kg-info {
   margin: 20px auto 0; max-width: 580px; text-align: center; min-height: 3.2em;
   font-size: 1rem; color: var(--text); padding: 16px 20px; border-radius: var(--radius);
-  background: rgba(16, 31, 53, .6); border: 1px solid var(--line-strong);
-  backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: rgba(16, 31, 53, .92); border: 1px solid var(--line-strong);
 }
 
 /* ---------- Experiencia (timeline en tarjetas) ---------- */
@@ -517,7 +515,7 @@ ul, ol { margin: 0; padding: 0; }
   .nav-toggle { display: block; }
   .site-nav {
     position: fixed; top: 62px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
-    background: rgba(7, 14, 26, .97); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line);
+    background: rgba(7, 14, 26, .98); border-bottom: 1px solid var(--line);
     padding: 8px 20px 20px; transform: translateY(-120%); transition: transform .3s ease; visibility: hidden;
   }
   .site-nav.open { transform: none; visibility: visible; }
@@ -699,4 +697,22 @@ ul, ol { margin: 0; padding: 0; }
   .aurora i { animation: none; filter: blur(60px); }
   .hero::after { animation: none; }
   .marquee { animation: none; }
+}
+
+/* Utilidades que reemplazan los atributos style del HTML (CSP sin 'unsafe-inline') */
+.f-cian { fill: var(--cian) !important; }
+.f-cob { fill: var(--cobalto) !important; }
+.f-tinta { fill: var(--tinta) !important; }
+.s-cian { stroke: var(--cian) !important; }
+.s-cob { stroke: var(--cobalto) !important; }
+.d-0 { --d: 0s; } .d-15 { --d: .15s; } .d-30 { --d: .3s; } .d-45 { --d: .45s; } .d-60 { --d: .6s; }
+.i-0 { --i: 0; } .i-1 { --i: 1; } .i-2 { --i: 2; } .i-3 { --i: 3; } .i-4 { --i: 4; }
+
+/* Animaciones en pausa mientras la sección está fuera de pantalla (script.js agrega .is-off) */
+.is-off *:not(:is(.job, .tech-card, .skill-card, .edu-card, .contact-item, .stat, .certs li)),
+.is-off *::before, .is-off *::after { animation-play-state: paused !important; }
+
+/* Encabezado sin desenfoque en pantallas pequeñas: menos trabajo de render al hacer scroll */
+@media (max-width: 900px) {
+  .site-header { background: rgba(8, 12, 22, .95); backdrop-filter: none; -webkit-backdrop-filter: none; }
 }

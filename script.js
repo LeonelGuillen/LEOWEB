@@ -47,15 +47,28 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Barra de progreso de lectura
+  // Se mide el alto del documento solo al cargar o cambiar de tamaño (evita reflow en cada scroll)
   var bar = document.querySelector('.progress span');
-  function onProgress() {
+  var maxScroll = 0, ticking = false;
+  function measure() {
     var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    var p = max > 0 ? h.scrollTop / max : 0;
+    maxScroll = h.scrollHeight - h.clientHeight;
+  }
+  function paint() {
+    ticking = false;
+    var p = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0;
     if (bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
   }
+  function onProgress() {
+    if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+  }
   window.addEventListener('scroll', onProgress, { passive: true });
-  onProgress();
+  window.addEventListener('resize', function () { measure(); onProgress(); });
+  window.addEventListener('load', function () { measure(); onProgress(); });
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(function () { measure(); onProgress(); }).observe(document.body);
+  }
+  requestAnimationFrame(function () { measure(); paint(); });
 
   // Palabra rotativa del hero
   var words = document.querySelectorAll('.rot-word');

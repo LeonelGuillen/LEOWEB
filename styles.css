@@ -1,8 +1,23 @@
 /* =========================================================
    Leonel Guillén · Sitio personal
-   Tema oscuro con paleta de leoguillen.lovable.app
+   Tema oscuro con paleta y tipografía de leoguillen.lovable.app (fuentes alojadas en /fonts)
    Contrastes WCAG AA verificados (mínimo 4.5:1 en texto)
    ========================================================= */
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url("fonts/inter-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Playfair Display"; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("fonts/playfair-display-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Playfair Display"; font-style: italic; font-weight: 400 900; font-display: swap;
+  src: url("fonts/playfair-display-latin-wght-italic.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 :root {
   --bg: #080C16;          /* fondo general */
   --bg-2: #0B111E;        /* secciones alternas */
@@ -33,6 +48,12 @@ body {
   overflow-x: hidden;
 }
 a { color: inherit; }
+.skip-link {
+  position: absolute; left: 16px; top: -60px; z-index: 200; padding: 10px 16px; border-radius: 10px;
+  background: var(--cobalto); color: var(--on-accent); font-weight: 700; text-decoration: none; transition: top .2s ease;
+}
+.skip-link:focus { top: 12px; }
+main:focus { outline: none; }
 h1, h2, h3 { font-family: var(--serif); line-height: 1.12; margin: 0; font-weight: 500; letter-spacing: -0.01em; }
 p { margin: 0 0 1em; }
 ul, ol { margin: 0; padding: 0; }
@@ -130,7 +151,7 @@ ul, ol { margin: 0; padding: 0; }
 }
 .aurora { position: absolute; inset: -20% -10% auto; height: 120%; pointer-events: none; z-index: 0; }
 .aurora i {
-  position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55;
+  position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; will-change: transform;
   animation: drift 16s ease-in-out infinite alternate;
 }
 .aurora i:nth-child(1) { width: 520px; height: 520px; background: #475569; top: 0; left: 8%; }
@@ -326,14 +347,19 @@ ul, ol { margin: 0; padding: 0; }
   background: repeating-linear-gradient(90deg, var(--line-strong) 0 10px, transparent 10px 18px);
 }
 .flow-dot {
-  position: absolute; top: -5px; left: 0; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--cian); box-shadow: 0 0 0 6px rgba(245, 159, 10, .18), 0 0 20px var(--cian);
+  position: absolute; top: -5px; left: 0; right: 0; height: 12px; will-change: transform;
   animation: travel 4.5s cubic-bezier(.5, 0, .5, 1) infinite;
 }
-@keyframes travel {
-  0% { left: 0; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { left: calc(100% - 12px); opacity: 0; }
+.flow-dot::after {
+  content: ""; position: absolute; right: 0; top: 0; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--cian); box-shadow: 0 0 0 6px rgba(245, 159, 10, .18), 0 0 20px var(--cian);
 }
-.flow-steps { list-style: none; position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+@keyframes travel {
+  0% { transform: translateX(calc(-100% + 12px)); opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { transform: translateX(0); opacity: 0; }
+}
+.flow-steps { list-style: none; position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+.flow-steps > .flow-step { grid-column: span 2; }
+.flow-steps > .flow-step:nth-child(4) { grid-column: 2 / span 2; }
 .flow-step {
   border-radius: var(--radius); padding: 26px 24px 24px; position: relative; z-index: 1;
   opacity: 0; transform: translateY(24px);
@@ -664,3 +690,13 @@ ul, ol { margin: 0; padding: 0; }
 .tech-visual .t-stack rect:nth-child(3) { fill: var(--cobalto-2) !important; }
 
 @media (max-width: 760px) { .stats { margin-top: 0; padding-top: 48px; } }
+
+/* Rendimiento en móvil: fondos estáticos, se mantienen los flujos y diagramas animados */
+@media (max-width: 1000px) {
+  .flow-steps > .flow-step, .flow-steps > .flow-step:nth-child(4) { grid-column: auto; }
+}
+@media (max-width: 900px) {
+  .aurora i { animation: none; filter: blur(60px); }
+  .hero::after { animation: none; }
+  .marquee { animation: none; }
+}
